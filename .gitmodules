@@ -1,0 +1,3 @@
+[submodule "ompy"]
+	path = ompy
+	url = https://github.com/oslocyclotronlab/ompy/
