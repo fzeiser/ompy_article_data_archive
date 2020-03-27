@@ -27,8 +27,6 @@ RUN [ "/bin/bash", "-c", "apt-get install -y libblas{3,-dev} liblapack{3,-dev} c
 RUN ["/bin/bash", "-c", "apt-get install -y dvipng texlive-latex-extra texlive-fonts-recommended"]
 RUN ["/bin/bash", "-c", "echo $( apt-get install -y cm-super)"]
 
-echo $(find / -type f -name type1ec* 2>/dev/null)
-
 RUN yes | pip install pymultinest
 RUN git clone https://github.com/JohannesBuchner/MultiNest.git
 RUN [ "/bin/bash", "-c", "cd MultiNest/build/ && cmake .. && make && cd ../../" ]
