@@ -25,27 +25,21 @@ RUN [ "/bin/bash", "-c", "apt-get install -y libblas{3,-dev} liblapack{3,-dev} c
 
 # Needed for latex support of a font in Matplotlib in the notebook
 RUN ["/bin/bash", "-c", "apt-get install -y dvipng texlive-latex-extra texlive-fonts-recommended"]
-
-RUN ["/bin/bash", "-c", "echo $( apt-get install -y dvipng texlive-latex-extra texlive-fonts-recommended)"]
 RUN ["/bin/bash", "-c", "echo $( apt-get install -y cm-super)"]
-RUN ["/bin/bash", "-c", "echo $(tlmgr install type1ec)"]
-RUN ["/bin/bash", "-c", "echo $(find / -type f -name amsmath* 2>/dev/null)"]
-RUN ["/bin/bash", "-c", "echo $(find / -type f -name type1ec* 2>/dev/null)"]
 
-RUN ["/bin/bash", "-c", "sleep 10"]
+echo $(find / -type f -name type1ec* 2>/dev/null)
 
+RUN yes | pip install pymultinest
+RUN git clone https://github.com/JohannesBuchner/MultiNest.git
+RUN [ "/bin/bash", "-c", "cd MultiNest/build/ && cmake .. && make && cd ../../" ]
+ENV LD_LIBRARY_PATH=/home/jovyan/MultiNest/lib/:$LD_LIBRARY_PATH
 
-# RUN yes | pip install pymultinest
-# RUN git clone https://github.com/JohannesBuchner/MultiNest.git
-# RUN [ "/bin/bash", "-c", "cd MultiNest/build/ && cmake .. && make && cd ../../" ]
-# ENV LD_LIBRARY_PATH=/home/jovyan/MultiNest/lib/:$LD_LIBRARY_PATH
-#
-# USER $NB_USER
-# # Due to some cache issue with Mybinder we ought to use COPY instead
-# # of git clone.
-# COPY --chown=1000:100 . this_repo
-# # REMBEBER TO checkout the BRANCH you want
-# RUN cd this_repo/ompy &&\
-#     # git submodule update --init --recursive &&\ # now in hooks/post_checkout
-#     pip install -e .
-#
+USER $NB_USER
+# Due to some cache issue with Mybinder we ought to use COPY instead
+# of git clone.
+COPY --chown=1000:100 . this_repo
+# REMBEBER TO checkout the BRANCH you want
+RUN cd this_repo/ompy &&\
+    # git submodule update --init --recursive &&\ # now in hooks/post_checkout
+    pip install -e .
+
