@@ -27,6 +27,7 @@ RUN [ "/bin/bash", "-c", "apt-get install -y libblas{3,-dev} liblapack{3,-dev} c
 RUN ["/bin/bash", "-c", "apt-get install -y dvipng texlive-latex-extra texlive-fonts-recommended"]
 
 RUN ["/bin/bash", "-c", "echo $( apt-get install -y dvipng texlive-latex-extra texlive-fonts-recommended)"]
+RUN ["/bin/bash", "-c", "echo $( apt-get install -y cm-super)"]
 RUN ["/bin/bash", "-c", "echo $(tlmgr install type1ec)"]
 RUN ["/bin/bash", "-c", "echo $(find / -type f -name amsmath* 2>/dev/null)"]
 RUN ["/bin/bash", "-c", "echo $(find / -type f -name type1ec* 2>/dev/null)"]
